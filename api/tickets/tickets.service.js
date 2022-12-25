@@ -58,16 +58,31 @@ module.exports = {
   },
   updateticket: (data, params, callBack) => {
     pool.query(
-      `update tickets set scanned=1 where ticketqrid = ?`,
-      [ params.id],
+      `select * from tickets where ticketqrid = ?`,
+      [id],
       (error, results, fields) => {
         if (error) {
           // callBack(error);
           return callBack(null, { error: 'something went wrong!' })
         }
-        return callBack(null, results[0])
+        if(!results[0].scanned){
+          pool.query(
+            `update tickets set scanned=1 where ticketqrid = ?`,
+            [ params.id],
+            (error, results, fields) => {
+              if (error) {
+                // callBack(error);
+                return callBack(null, { error: 'something went wrong!' })
+              }
+              return callBack(null, results[0])
+            }
+          )
+        }else{
+          return callBack(null, { error: 'Ticket already Redeemed!' })
+        }
       }
     )
+  
   },
   // updateticket: (data, params, callBack) => {
   //   pool.query(

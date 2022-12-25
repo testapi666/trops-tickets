@@ -10,6 +10,13 @@ app.use(morgan('dev'))
 
 const ticketsRouter = require('./api/tickets/tickets.router')
 
+app.get('/', (req, res) => {
+  // console.log('req data:', req)
+  return res.status(200).json({
+    success: 1,
+    data: 'Welcome to Trops Event Manager- No cheating!',
+  })
+})
 app.get('/api', (req, res) => {
   // console.log('req data:', req)
   return res.status(200).json({

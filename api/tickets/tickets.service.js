@@ -36,7 +36,7 @@ module.exports = {
   getticketById: (id, callBack) => {
     pool.query(
       `select * from tickets where id = ?`,
-      [id],
+      [params.id],
       (error, results, fields) => {
         if (error) {
           // callBack(error);
@@ -59,7 +59,7 @@ module.exports = {
   updateticket: (data, params, callBack) => {
     pool.query(
       `select * from tickets where ticketqrid = ?`,
-      [id],
+      [params.id],
       (error, results, fields) => {
         if (error) {
           // callBack(error);

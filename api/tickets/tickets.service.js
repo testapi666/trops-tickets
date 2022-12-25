@@ -66,6 +66,7 @@ module.exports = {
           return callBack(null, { error: 'something went wrong!' })
         }
         console.log(results[0]);
+        console.log(results[0].scanned,results[0].scanned==0);
         if(results[0].scanned==0){
           pool.query(
             `update tickets set scanned=1 where ticketqrid = ?`,

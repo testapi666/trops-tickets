@@ -28,7 +28,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/tickets', ticketsRouter)
 
-const port = process.env.APP_PORT || 4000
+const port = process.env.PORT || 4000
 app.listen(port, () => {
   console.log('server up and running on PORT :', port)
 })

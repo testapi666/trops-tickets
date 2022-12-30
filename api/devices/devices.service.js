@@ -34,6 +34,7 @@ module.exports = {
   },
 
   getdeviceById: (id, callBack) => {
+    console.log('id');
     pool.query(
       `select * from devices where serial = ?`,
       [params.id],
@@ -56,49 +57,20 @@ module.exports = {
       return callBack(null, results)
     })
   },
+
   updatedevice: (data, params, callBack) => {
     pool.query(
-      `select * from devices where serial = ?`,
-      [params.id],
+      `update devices set id=?, deviceqrid=?, eventid=? where id = ?`,
+      [params.id, data.deviceqrid,data.eventid, params.id],
       (error, results, fields) => {
         if (error) {
           // callBack(error);
           return callBack(null, { error: 'something went wrong!' })
         }
-        console.log(results[0]);
-        console.log(results[0].scanned,results[0].scanned==0);
-        if(results[0].scanned==0){
-          pool.query(
-            `update devices set scanned=1 where deviceqrid = ?`,
-            [ params.id],
-            (error, results, fields) => {
-              if (error) {
-                // callBack(error);
-                return callBack(null, { error: 'something went wrong!' })
-              }
-              return callBack(null, results[0])
-            }
-          )
-        }else{
-          return callBack(null, { error: 'Device already Redeemed!' })
-        }
+        return callBack(null, results[0])
       }
     )
-  
   },
-  // updatedevice: (data, params, callBack) => {
-  //   pool.query(
-  //     `update devices set id=?, deviceqrid=?, eventid=? where id = ?`,
-  //     [params.id, data.deviceqrid,data.eventid, params.id],
-  //     (error, results, fields) => {
-  //       if (error) {
-  //         // callBack(error);
-  //         return callBack(null, { error: 'something went wrong!' })
-  //       }
-  //       return callBack(null, results[0])
-  //     }
-  //   )
-  // },
   deletedevice: (data, callBack) => {
     console.log(data)
     pool.query(

@@ -4,8 +4,8 @@ module.exports = {
   create: (data, callBack) => {
 
     pool.query(
-      `insert into devices( deviceqrid,eventid)
-                values (?)`,[data.deviceqrid,data.eventid],
+      `insert into devices( serial,name)
+                values (?)`,[data.serial,data.name],
       
       (error, results, fields) => {
         if (error) {
@@ -19,7 +19,7 @@ module.exports = {
   },
   createmany: (data, callBack) => {
     pool.query(
-      `insert into devices( deviceqrid,eventid)
+      `insert into devices( serial,name)
                 values ? `,
                 [[...data.devices]],
       (error, results, fields) => {
@@ -35,7 +35,7 @@ module.exports = {
 
   getdeviceById: (id, callBack) => {
     pool.query(
-      `select * from devices where id = ?`,
+      `select * from devices where serial = ?`,
       [params.id],
       (error, results, fields) => {
         if (error) {
@@ -58,7 +58,7 @@ module.exports = {
   },
   updatedevice: (data, params, callBack) => {
     pool.query(
-      `select * from devices where deviceqrid = ?`,
+      `select * from devices where serial = ?`,
       [params.id],
       (error, results, fields) => {
         if (error) {
@@ -102,7 +102,7 @@ module.exports = {
   deletedevice: (data, callBack) => {
     console.log(data)
     pool.query(
-      `delete from devices where id = ?`,
+      `delete from devices where serial = ?`,
       [data.id],
       (error, results, fields) => {
         if (error) {

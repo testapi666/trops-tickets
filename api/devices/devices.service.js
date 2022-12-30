@@ -37,7 +37,7 @@ module.exports = {
     console.log('id');
     pool.query(
       `select * from devices where serial = ?`,
-      [params.id],
+      [id],
       (error, results, fields) => {
         if (error) {
           // callBack(error);

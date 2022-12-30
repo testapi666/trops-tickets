@@ -9,6 +9,7 @@ app.use(cors())
 app.use(morgan('dev'))
 
 const ticketsRouter = require('./api/tickets/tickets.router')
+const devicesRouter = require('./api/devices/devices.router')
 
 app.get('/', (req, res) => {
   // console.log('req data:', req)
@@ -27,6 +28,7 @@ app.get('/api', (req, res) => {
 
 
 app.use('/api/tickets', ticketsRouter)
+app.use('/api/devices', devicesRouter)
 
 const port = process.env.PORT || 4000
 app.listen(port, () => {

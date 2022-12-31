@@ -67,20 +67,25 @@ module.exports = {
         }
         console.log('results',results);
         // console.log(results[0].scanned,results[0].scanned==0);
-        if(results && results[0] && results[0].scanned==0){
-          pool.query(
-            `update tickets set scanned=1 where ticketqrid = ?`,
-            [ params.id],
-            (error, results, fields) => {
-              if (error) {
-                // callBack(error);
-                return callBack(null, { error: 'something went wrong!' })
+        if (results && results[0]) {
+          
+          if(results[0].scanned==0){
+            pool.query(
+              `update tickets set scanned=1 where ticketqrid = ?`,
+              [ params.id],
+              (error, results, fields) => {
+                if (error) {
+                  // callBack(error);
+                  return callBack(null, { error: 'something went wrong!' })
+                }
+                return callBack(null, results[0])
               }
-              return callBack(null, results[0])
-            }
-          )
-        }else{
-          return callBack(null, { error: 'Ticket already Redeemed!' })
+            )
+          }else{
+            return callBack(null, { error: 'Ticket already Redeemed!' })
+          }
+        } else {
+          return callBack(null, { error: 'Invalid Ticket!' })
         }
       }
     )
